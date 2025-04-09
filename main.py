@@ -1,5 +1,5 @@
-import tkinter as tk
-from tkinter import ttk, messagebox
+import tkinter as tk # gui
+from tkinter import ttk, messagebox # for the gui
 import os
 from datetime import datetime
 import sys
@@ -16,7 +16,7 @@ class SecretAgentToolkit:
     def __init__(self, root):
         self.root = root
         self.root.title("Secret Agent Toolkit")
-        self.root.geometry("800x600")
+        self.root.geometry("800x800")
         self.root.configure(bg="#2c3e50")
         
         # Set icon if available
@@ -85,6 +85,7 @@ if __name__ == "__main__":
     # Create required directories
     os.makedirs("logs", exist_ok=True)
     os.makedirs("saved_messages", exist_ok=True)
+    os.makedirs("saved_passwords", exist_ok=True)
     os.makedirs("tools", exist_ok=True)
     
     # Initialize and run the application

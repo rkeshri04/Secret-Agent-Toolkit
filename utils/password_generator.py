@@ -161,7 +161,7 @@ class PasswordGeneratorTool:
         file_path = filedialog.asksaveasfilename(
             defaultextension=".txt",
             filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
-            initialdir="saved_messages"
+            initialdir="saved_passwords"
         )
         
         if file_path:
