@@ -2,11 +2,9 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import random
 import string
-import os
 
 class PasswordGeneratorTool:
-    def __init__(self, parent, log_callback):
-        self.log_callback = log_callback
+    def __init__(self, parent):
         self.frame = ttk.Frame(parent, padding=10)
         self.create_widgets()
     
@@ -138,7 +136,6 @@ class PasswordGeneratorTool:
         # Add to history
         self.history_text.insert("1.0", f"{password}\n")
         
-        self.log_callback(f"Generated {length}-character password")
     
     def copy_to_clipboard(self):
         """Copy generated password to clipboard"""
@@ -149,7 +146,6 @@ class PasswordGeneratorTool:
         
         self.frame.clipboard_clear()
         self.frame.clipboard_append(password)
-        self.log_callback("Password copied to clipboard")
     
     def save_to_file(self):
         """Save password to a file"""
@@ -167,4 +163,3 @@ class PasswordGeneratorTool:
         if file_path:
             with open(file_path, 'w') as file:
                 file.write(password)
-            self.log_callback(f"Saved password to {os.path.basename(file_path)}")

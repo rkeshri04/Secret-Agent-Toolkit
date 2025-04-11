@@ -1,11 +1,9 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
-import os
 import re
 
 class MessageDecoderTool:
-    def __init__(self, parent, log_callback):
-        self.log_callback = log_callback
+    def __init__(self, parent):
         self.frame = ttk.Frame(parent, padding=10)
         self.create_widgets()
     
@@ -92,14 +90,14 @@ class MessageDecoderTool:
         pattern_frame = ttk.Frame(decoder_frame)
         pattern_frame.pack(fill="x", pady=5)
         
-        ttk.Label(pattern_frame, text="Pattern:").pack(side=tk.LEFT, padx=5)
-        self.pattern_var = tk.StringVar(value=r"\b[A-Z][a-z]+\b")
-        self.pattern_entry = ttk.Entry(
-            pattern_frame,
-            textvariable=self.pattern_var,
-            width=30
-        )
-        self.pattern_entry.pack(side=tk.LEFT, padx=5, fill="x", expand=True)
+        # ttk.Label(pattern_frame, text="Pattern:").pack(side=tk.LEFT, padx=5)
+        # self.pattern_var = tk.StringVar(value=r"\b[A-Z][a-z]+\b")
+        # self.pattern_entry = ttk.Entry(
+        #     pattern_frame,
+        #     textvariable=self.pattern_var,
+        #     width=30
+        # )
+        # self.pattern_entry.pack(side=tk.LEFT, padx=5, fill="x", expand=True)
         
         # Decode button
         ttk.Button(
@@ -128,7 +126,6 @@ class MessageDecoderTool:
                     content = file.read()
                 self.message_text.delete("1.0", tk.END)
                 self.message_text.insert("1.0", content)
-                self.log_callback(f"Loaded encoded message from {os.path.basename(file_path)}")
             except Exception as e:
                 messagebox.showerror("Error", f"Could not load file: {str(e)}")
     
@@ -138,7 +135,6 @@ class MessageDecoderTool:
             clipboard_content = self.frame.clipboard_get()
             self.message_text.delete("1.0", tk.END)
             self.message_text.insert("1.0", clipboard_content)
-            self.log_callback("Pasted encoded message from clipboard")
         except Exception as e:
             messagebox.showerror("Error", f"Could not paste from clipboard: {str(e)}")
     
@@ -146,7 +142,6 @@ class MessageDecoderTool:
         """Clear all text fields"""
         self.message_text.delete("1.0", tk.END)
         self.result_text.delete("1.0", tk.END)
-        self.log_callback("Cleared decoder text fields")
     
     def decode_message(self):
         """Decode the message based on selected method"""
@@ -185,4 +180,3 @@ class MessageDecoderTool:
         # Update result
         self.result_text.delete("1.0", tk.END)
         self.result_text.insert("1.0", decoded)
-        self.log_callback(f"Decoded message using {decoder_type} method")

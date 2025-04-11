@@ -8,9 +8,9 @@ import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # Import tool modules
-from utils.caesar_cipher import CaesarCipherTool
-from utils.password_generator import PasswordGeneratorTool
-from utils.message_decoder import MessageDecoderTool
+from caesar_cipher import CaesarCipherTool
+from password_generator import PasswordGeneratorTool
+from message_decoder import MessageDecoderTool
 
 class SecretAgentToolkit:
     def __init__(self, root):
@@ -26,8 +26,7 @@ class SecretAgentToolkit:
             pass
         
         self.create_widgets()
-        self.log_activity("Application started")
-    
+
     def create_widgets(self):
         # Top header
         header_frame = tk.Frame(self.root, bg="#34495e", pady=10)
@@ -46,9 +45,9 @@ class SecretAgentToolkit:
         self.notebook.pack(expand=True, fill="both", padx=10, pady=10)
         
         # Initialize tools and add to notebook
-        self.caesar_tool = CaesarCipherTool(self.notebook, self.log_activity)
-        self.password_tool = PasswordGeneratorTool(self.notebook, self.log_activity)
-        self.decoder_tool = MessageDecoderTool(self.notebook, self.log_activity)
+        self.caesar_tool = CaesarCipherTool(self.notebook)
+        self.password_tool = PasswordGeneratorTool(self.notebook)
+        self.decoder_tool = MessageDecoderTool(self.notebook)
         
         self.notebook.add(self.caesar_tool.frame, text="Caesar Cipher")
         self.notebook.add(self.password_tool.frame, text="Password Generator")
@@ -65,28 +64,11 @@ class SecretAgentToolkit:
             fg="white"
         )
         self.status_bar.pack(side=tk.BOTTOM, fill=tk.X)
-    
-    def log_activity(self, message):
-        """Log user activities to a file"""
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        log_message = f"[{timestamp}] {message}\n"
-        
-        # Ensure logs directory exists
-        os.makedirs("logs", exist_ok=True)
-        
-        # Update status bar
-        self.status_bar.config(text=message)
-        
-        # Write to log file
-        with open("logs/activity_log.txt", "a") as log_file:
-            log_file.write(log_message)
 
 if __name__ == "__main__":
     # Create required directories
-    os.makedirs("logs", exist_ok=True)
     os.makedirs("saved_messages", exist_ok=True)
     os.makedirs("saved_passwords", exist_ok=True)
-    os.makedirs("tools", exist_ok=True)
     
     # Initialize and run the application
     root = tk.Tk()

@@ -1,2 +1,0 @@
-[2025-04-09 18:29:13] Application started
-[2025-04-09 18:29:20] Message encrypted with shift 3

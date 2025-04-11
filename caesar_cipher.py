@@ -3,8 +3,7 @@ from tkinter import ttk, filedialog, messagebox
 import os
 
 class CaesarCipherTool:
-    def __init__(self, parent, log_callback):
-        self.log_callback = log_callback
+    def __init__(self, parent):
         self.frame = ttk.Frame(parent, padding=10)
         self.create_widgets()
     
@@ -87,7 +86,6 @@ class CaesarCipherTool:
         encrypted_message = self._caesar_cipher(message, shift)
         self.result_text.delete("1.0", tk.END)
         self.result_text.insert("1.0", encrypted_message)
-        self.log_callback(f"Message encrypted with shift {shift}")
     
     def decrypt_message(self):
         message = self.message_text.get("1.0", "end-1c")
@@ -100,7 +98,6 @@ class CaesarCipherTool:
         decrypted_message = self._caesar_cipher(message, -shift)
         self.result_text.delete("1.0", tk.END)
         self.result_text.insert("1.0", decrypted_message)
-        self.log_callback(f"Message decrypted with shift {shift}")
     
     def _caesar_cipher(self, text, shift):
         """Implement Caesar cipher with the given shift"""
@@ -118,7 +115,6 @@ class CaesarCipherTool:
     def clear_text(self):
         self.message_text.delete("1.0", tk.END)
         self.result_text.delete("1.0", tk.END)
-        self.log_callback("Cleared cipher text fields")
     
     def save_to_file(self):
         """Save encrypted/decrypted message to a file"""
@@ -136,7 +132,6 @@ class CaesarCipherTool:
         if file_path:
             with open(file_path, 'w') as file:
                 file.write(text)
-            self.log_callback(f"Saved message to {os.path.basename(file_path)}")
     
     def load_from_file(self):
         """Load message from a file"""
@@ -151,6 +146,5 @@ class CaesarCipherTool:
                     content = file.read()
                 self.message_text.delete("1.0", tk.END)
                 self.message_text.insert("1.0", content)
-                self.log_callback(f"Loaded message from {os.path.basename(file_path)}")
             except Exception as e:
                 messagebox.showerror("Error", f"Could not load file: {str(e)}")
